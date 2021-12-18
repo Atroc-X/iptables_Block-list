@@ -1,0 +1,52 @@
+//封闭端口-sogo
+forbidden_ports=25,26,465,587,109,110,995,143,218,220,993,24,50,57,105,106,158,209,1109,24554,60177,60179
+//封闭端口
+iptables -A OUTPUT -p tcp -m multiport --dports 25,26,465,587 -m state --state NEW,ESTABLISHED -j REJECT --reject-with icmp-port-unreachable
+iptables -A OUTPUT -p udp -m multiport --dports 25,26,465,587 -j DROP
+iptables -A OUTPUT -p tcp -m multiport --dports 109,110,995 -m state --state NEW,ESTABLISHED -j REJECT --reject-with icmp-port-unreachable
+iptables -A OUTPUT -p udp -m multiport --dports 109,110,995 -j DROP
+iptables -A OUTPUT -p tcp -m multiport --dports 143,218,220,993 -m state --state NEW,ESTABLISHED -j REJECT --reject-with icmp-port-unreachable
+iptables -A OUTPUT -p udp -m multiport --dports 143,218,220,993 -j DROP
+iptables -A OUTPUT -p tcp -m multiport --dports 24,50,57,105,106,158,209,1109,24554,60177,60179 -m state --state NEW,ESTABLISHED -j REJECT --reject-with icmp-port-unreachable
+iptables -A OUTPUT -p udp -m multiport --dports 24,50,57,105,106,158,209,1109,24554,60177,60179 -j DROP
+//tcp-udp drop 端口
+iptables -A OUTPUT -p tcp -m multiport --dports 25,26,465,587,109,110,995,143,218,220,993 -j DROP
+iptables -A OUTPUT -p udp -m multiport --dports 25,26,465,587,109,110,995,143,218,220,993 -j DROP
+iptables -A OUTPUT -p tcp -m multiport --dports 24,50,57,105,106,158,209,1109,24554,60177,60179 -j DROP
+iptables -A OUTPUT -p udp -m multiport --dports 24,50,57,105,106,158,209,1109,24554,60177,60179 -j DROP
+//BT
+iptables -A OUTPUT -m string --string "torrent" --algo bm --to 65535 -j DROP
+iptables -A OUTPUT -m string --string ".torrent" --algo bm --to 65535 -j DROP
+iptables -A OUTPUT -m string --string "peer_id=" --algo bm --to 65535 -j DROP
+iptables -A OUTPUT -m string --string "announce" --algo bm --to 65535 -j DROP
+iptables -A OUTPUT -m string --string "info_hash" --algo bm --to 65535 -j DROP
+iptables -A OUTPUT -m string --string "get_peers" --algo bm --to 65535 -j DROP
+iptables -A OUTPUT -m string --string "find_node" --algo bm --to 65535 -j DROP
+iptables -A OUTPUT -m string --string "BitTorrent" --algo bm --to 65535 -j DROP
+iptables -A OUTPUT -m string --string "announce_peer" --algo bm --to 65535 -j DROP
+iptables -A OUTPUT -m string --string "BitTorrent protocol" --algo bm --to 65535 -j DROP
+iptables -A OUTPUT -m string --string "announce.php?passkey=" --algo bm --to 65535 -j DROP
+iptables -A OUTPUT -m string --string "magnet:" --algo bm --to 65535 -j DROP
+iptables -A OUTPUT -m string --string "xunlei" --algo bm --to 65535 -j DROP
+iptables -A OUTPUT -m string --string "sandai" --algo bm --to 65535 -j DROP
+iptables -A OUTPUT -m string --string "Thunder" --algo bm --to 65535 -j DROP
+iptables -A OUTPUT -m string --string "XLLiveUD" --algo bm --to 65535 -j DROP
+iptables -A INPUT -m string --string "torrent" --algo bm --to 65535 -j DROP
+iptables -A INPUT -m string --string ".torrent" --algo bm --to 65535 -j DROP
+iptables -A INPUT -m string --string "peer_id=" --algo bm --to 65535 -j DROP
+iptables -A INPUT -m string --string "announce" --algo bm --to 65535 -j DROP
+iptables -A INPUT -m string --string "info_hash" --algo bm --to 65535 -j DROP
+iptables -A INPUT -m string --string "get_peers" --algo bm --to 65535 -j DROP
+iptables -A INPUT -m string --string "find_node" --algo bm --to 65535 -j DROP
+iptables -A INPUT -m string --string "BitTorrent" --algo bm --to 65535 -j DROP
+iptables -A INPUT -m string --string "announce_peer" --algo bm --to 65535 -j DROP
+iptables -A INPUT -m string --string "BitTorrent protocol" --algo bm --to 65535 -j DROP
+iptables -A INPUT -m string --string "announce.php?passkey=" --algo bm --to 65535 -j DROP
+iptables -A INPUT -m string --string "magnet:" --algo bm --to 65535 -j DROP
+iptables -A INPUT -m string --string "xunlei" --algo bm --to 65535 -j DROP
+iptables -A INPUT -m string --string "sandai" --algo bm --to 65535 -j DROP
+iptables -A INPUT -m string --string "Thunder" --algo bm --to 65535 -j DROP
+iptables -A INPUT -m string --string "XLLiveUD" --algo bm --to 65535 -j DROP
+//矿池,币，黄，诈骗
+iptables -A OUTPUT -m string --string "pool" --algo bm --to 65535 -j DROP
+iptables -A OUTPUT -m string --string "monero" --algo bm --to 65535 -j DROP
